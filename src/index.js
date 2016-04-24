@@ -64,7 +64,7 @@ export default class Cleverbot {
 
   /**
    * Creates new instance of Cleverbot
-   * @returns {class Cleverbot}
+   * @returns {Cleverbot}
   */
   static create() {
     return new Cleverbot();
