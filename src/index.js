@@ -82,7 +82,7 @@ export default class Cleverbot {
       if (R.is(Array, val)) {
         return `${key}=${encodeURIComponent(val.join(','))}`;
       } else if (R.is(Object, val)) {
-        return this.encodeParams(val);
+        return this._encodeParams(val);
       }
       return `${key}=${encodeURIComponent(val)}`;
     }, R.keys(params)));
@@ -147,11 +147,11 @@ export default class Cleverbot {
     if (!state.cookies) return this._createCookie().then(() => this.sendMessage(message));
 
     const body = Object.assign({}, state.params, {stimulus: message});
-    body.icognocheck = this._digest(this.encodeParams(body).substring(9, 35));
+    body.icognocheck = this._digest(this._encodeParams(body).substring(9, 35));
     const encoded_body = this._encodeParams(body);
 
     const params = {
-      url: 'http://www.cleverbot.com/webservicemin',
+      url: 'http://www.cleverbot.com/webservicemin?uc=165',
       method: 'POST',
       form: body,
       headers: {
