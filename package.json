@@ -5,7 +5,7 @@
   "main": "dist",
   "scripts": {
     "build": "babel ./src --out-dir ./dist",
-    "prepublish": "npm run build",
+    "prepublish": "npm run test && npm run build",
     "test": "eslint ."
   },
   "author": "Dustin Blackman",
