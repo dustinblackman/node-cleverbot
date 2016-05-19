@@ -89,7 +89,6 @@ export default class Cleverbot {
   }
 
   _createCookie() {
-    console.log('Creating cookie');
     return request('http://www.cleverbot.com')
       .then(res => {
         if (!res.headers || !res.headers['set-cookie']) throw new Error('Cookie not set during response');
@@ -143,8 +142,9 @@ export default class Cleverbot {
    * @param {Boolean} Set to true to return an object containing both the reply message and the state
    * @returns {Promise.<String|Object>}
   */
-  sendMessage(message, state = {cookies: this.cookies, params: this.params}, return_state = false) {
-    if (!state.cookies) return this._createCookie().then(() => this.sendMessage(message));
+  sendMessage(message, state = null, return_state = false) {
+    if (!state) state = {cookies: this.cookies, params: this.params};
+    if (!state.cookies) return this._createCookie().then(() => this.sendMessage(...arguments));
 
     const body = Object.assign({}, state.params, {stimulus: message});
     body.icognocheck = this._digest(this._encodeParams(body).substring(9, 35));
